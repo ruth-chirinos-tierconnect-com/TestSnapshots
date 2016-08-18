@@ -144,4 +144,7 @@ public class TestSnapshots {
         return result;
     }
 
+    public void compare (String serialNumber) {
+
+    }
 }
