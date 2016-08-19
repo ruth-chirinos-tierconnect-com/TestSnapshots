@@ -148,7 +148,7 @@ public class TestSnapshots {
 
                 bw.write("Thing UDF,Value,Control,Snapshot UDF,Value");
                 for(Map.Entry<String,Object> entry : thingUdfValues.entrySet()) {
-                    bw.write("\n"+entry.getKey()+","+entry.getValue()+",");
+                    bw.write(System.lineSeparator()+entry.getKey()+","+entry.getValue()+",");
                     if (snapshotUdfValues.containsKey(entry.getKey())){
                         if ((entry.getValue()).toString().equals(snapshotUdfValues.get(entry.getKey()).toString())){
                             bw.write("OK,"+entry.getKey()+","+snapshotUdfValues.get(entry.getKey()));
