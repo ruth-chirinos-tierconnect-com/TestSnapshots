@@ -45,6 +45,21 @@ public class BlinkData {
         return data;
     }
 
+    /**
+     * Case 1 , Incremental changes
+     * @return
+     */
+    public static List<String> getCase0(String serialNumber) {
+        //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
+        List<String> data = new ArrayList<>();
+        StringBuilder sb =  new StringBuilder("");
+        sb.append("sn,5");
+        sb.append(System.lineSeparator());
+        sb.append((new BlinkData(serialNumber,1471579200000L,"zone","S5241-L0-Sales")).toString());
+        data.add(sb.toString());
+        return data;
+    }
+
     @Override
     public String toString() {
         return serialNumber+","+timestamp+","+property+","+value;

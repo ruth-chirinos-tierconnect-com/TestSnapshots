@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b64b1769-b4e2-4c7d-b226-0a9a4d148223" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestTimestamp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/classes/main/com/coderoad/snapshots/TestSnapshots.class" afterPath="$PROJECT_DIR$/build/classes/main/com/coderoad/snapshots/TestSnapshots.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java" afterPath="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestSnapshots.java" afterPath="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestSnapshots.java" />
     </list>
     <ignored path="TestSnapshots.iws" />
@@ -69,8 +67,8 @@
       <file leaf-file-name="TestSnapshots.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestSnapshots.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5534591">
-              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.6289308">
+              <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#readFile#0;class#TestSnapshots#0" expanded="false" />
@@ -83,11 +81,11 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
+              <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1559#1560#0" expanded="true" />
-                <element signature="e#1631#1632#0" expanded="true" />
+                <element signature="e#2068#2069#0" expanded="true" />
+                <element signature="e#2140#2141#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -467,10 +465,10 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/MongoDAOUtils.java" />
         <option value="$PROJECT_DIR$/src/main/resources/ChangeZone.txt" />
-        <option value="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestTimestamp.java" />
         <option value="$PROJECT_DIR$/output/compareSerial_RCC1000000001.csv" />
         <option value="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestSnapshots.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java" />
       </list>
     </option>
   </component>
@@ -579,20 +577,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="snapshots" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TestSnapshots" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TestSnapshots" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="output" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1219,12 +1203,19 @@
       <workItem from="1471480399043" duration="2055000" />
       <workItem from="1471482472676" duration="62000" />
       <workItem from="1471523221906" duration="6223000" />
-      <workItem from="1471554944966" duration="9233000" />
+      <workItem from="1471554944966" duration="11638000" />
     </task>
+    <task id="LOCAL-00001" summary="Test Data">
+      <created>1471609920526</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1471609920526</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27498000" />
+    <option name="totallyTimeSpent" value="29903000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1600" height="838" extended-state="0" />
@@ -1269,18 +1260,22 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Test Data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test Data" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestSnapshots.java</url>
-          <line>41</line>
+          <line>40</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestSnapshots.java</url>
-          <line>95</line>
+          <line>94</line>
           <properties />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
@@ -1615,18 +1610,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1559#1560#0" expanded="true" />
-            <element signature="e#1631#1632#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestTimestamp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1635,34 +1618,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output/compareSerial_RCC1000000001.csv">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/BlinkData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output/compareSerial_RCC1000000001.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output/compareSerial_RCC1000000004.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2068#2069#0" expanded="true" />
+            <element signature="e#2140#2141#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/coderoad/snapshots/TestSnapshots.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5534591">
-          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.6289308">
+          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#readFile#0;class#TestSnapshots#0" expanded="false" />

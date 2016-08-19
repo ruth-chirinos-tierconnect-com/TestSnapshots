@@ -39,9 +39,8 @@ public class TestSnapshots {
     public static void main(String[] args) {
         try {
             int sequence = 10002;
-//            List<String> data = readFile("ChangeZone.txt", sequence);
-            String serialNumber = "RCC1000000004";
-            List<String> data = BlinkData.getCase1(serialNumber);
+            String serialNumber = "RCC1000000005";
+            List<String> data = BlinkData.getCase0(serialNumber);
             //Send MQTT message to the Core
             if ( (data != null) && (!data.isEmpty()) ) {
                 for( String message : data ) {
