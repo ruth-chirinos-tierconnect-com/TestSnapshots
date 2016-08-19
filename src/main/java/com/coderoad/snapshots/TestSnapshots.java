@@ -35,11 +35,12 @@ public class TestSnapshots {
     private static String mqttHost = "localhost";
     private static int mqttPort = 1883;
     private static int qos = 2;
+    private static String mongoDatabase = "10.100.1.30";
 
     public static void main(String[] args) {
         try {
             int sequence = 10002;
-            String serialNumber = "RCC1000000005";
+            String serialNumber = "RCC1000000014";
             List<String> data = BlinkData.getCase0(serialNumber);
             //Send MQTT message to the Core
             if ( (data != null) && (!data.isEmpty()) ) {
@@ -131,7 +132,7 @@ public class TestSnapshots {
 
             //Check Mongo
             try{
-                MongoDAOUtils.getInstance().setupMongodb("10.100.1.30",27017,"riot_main",2000000,50,"admin","control123!");
+                MongoDAOUtils.getInstance().setupMongodb(mongoDatabase,27017,"riot_main",2000000,50,"admin","control123!");
                 DBObject query = new BasicDBObject();
                 query.put("serialNumber", serialNumber);
                 DBCursor cursor = MongoDAOUtils.getInstance().thingsCollection.find(query);
