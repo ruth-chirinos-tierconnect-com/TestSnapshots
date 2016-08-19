@@ -39,7 +39,9 @@ public class TestSnapshots {
     public static void main(String[] args) {
         try {
             int sequence = 10002;
-            List<String> data = readFile("ChangeZone.txt", sequence);
+//            List<String> data = readFile("ChangeZone.txt", sequence);
+            String serialNumber = "RCC1000000004";
+            List<String> data = BlinkData.getCase1(serialNumber);
             //Send MQTT message to the Core
             if ( (data != null) && (!data.isEmpty()) ) {
                 for( String message : data ) {
@@ -48,38 +50,10 @@ public class TestSnapshots {
                 }
             }
             //Check Mongo
-            try{
-                MongoDAOUtils.getInstance().setupMongodb("localhost",27017,"riot_main",2000000,50,"admin","control123!");
-                DBObject query = new BasicDBObject();
-                MongoDAOUtils.getInstance().thingSnapshotsCollection.find(query);
-
-            }
-            catch(UnknownHostException e){
-                e.printStackTrace();
-            }
+            compare(serialNumber);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        /*
-        PROD
-        db.getCollection('things').find({"serialNumber":"3039ECBC014E44012A05F27B"})
-        db.getCollection('thingSnapshotIds').find({_id:11568756})
-        db.getCollection('thingSnapshots').find({"value._id":11568756},
-{"value.zone":1, "value.DressingRoom":1, "tvalue.sCoreIn":1, "value.source":1}).sort({"time":-1})
-
-        10.100.1.30
-        db.getCollection('things').find({"serialNumber":"0000000000000000000RC006"}
-,{"zone":1, "DressingRoom":1, "tsCoreIn":1, "source":1, "time":1, "modifiedTime":1}
-)
-        db.getCollection('thingSnapshotIds').find({_id:9587066})
-        db.getCollection('thingSnapshots').find({"value._id":9587066}
-,{"value.zone":1, "value.DressingRoom":1, "value.tsCoreIn":1, "value.source":1, "value.modifiedTime":1, "time":1}
-).sort({"time":-1})
-
-
-
-        * */
     }
 
     static private void publish0(String mqttHost, int mqttPort, int qos, String topic, String body) throws MqttException {
@@ -109,8 +83,6 @@ public class TestSnapshots {
      */
     public static List<String> readFile (String fileName, int sequence){
         Long dateTimestamp = 1470009600000L;
-//        1470009600000
-//        1470013200000
         dateTimestamp = dateTimestamp + 3600000L;
         List<String> result = new ArrayList<>();
         try {
@@ -160,7 +132,7 @@ public class TestSnapshots {
 
             //Check Mongo
             try{
-                MongoDAOUtils.getInstance().setupMongodb("localhost",30000,"riot_main",2000000,50,"admin","control123!");
+                MongoDAOUtils.getInstance().setupMongodb("10.100.1.30",27017,"riot_main",2000000,50,"admin","control123!");
                 DBObject query = new BasicDBObject();
                 query.put("serialNumber", serialNumber);
                 DBCursor cursor = MongoDAOUtils.getInstance().thingsCollection.find(query);
