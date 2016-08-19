@@ -1,6 +1,7 @@
 package com.coderoad.snapshots;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -9,12 +10,18 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -144,7 +151,72 @@ public class TestSnapshots {
         return result;
     }
 
-    public void compare (String serialNumber) {
+    public static void compare (String serialNumber) {
+        SortedMap<String, Object> thingUdfValues = new TreeMap<>();
+        SortedMap<String, Object> snapshotUdfValues = new TreeMap<>();
+        try{
+            File csvFile = new File("/home/dev/TestSnapshots/output/compareSerial_"+serialNumber+".csv");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile));
 
+            //Check Mongo
+            try{
+                MongoDAOUtils.getInstance().setupMongodb("localhost",30000,"riot_main",2000000,50,"admin","control123!");
+                DBObject query = new BasicDBObject();
+                query.put("serialNumber", serialNumber);
+                DBCursor cursor = MongoDAOUtils.getInstance().thingsCollection.find(query);
+                for (Iterator<DBObject> it = cursor.iterator(); it.hasNext(); ) {
+                    BasicDBObject doc = (BasicDBObject) it.next();
+                    thingUdfValues = getUDFs(doc, "");
+                }
+
+                MongoDAOUtils.getInstance().thingSnapshotsCollection.find(query);
+                for (Iterator<DBObject> it = cursor.iterator(); it.hasNext(); ) {
+                    BasicDBObject doc = (BasicDBObject) it.next();
+                    snapshotUdfValues = getUDFs(doc, "");
+                }
+
+                bw.write("Thing UDF,Value,Control,Snapshot UDF,Value");
+                for(Map.Entry<String,Object> entry : thingUdfValues.entrySet()) {
+                    bw.write("\n"+entry.getKey()+","+entry.getValue()+",");
+                    if (snapshotUdfValues.containsKey(entry.getKey())){
+                        if ((entry.getValue()).toString().equals(snapshotUdfValues.get(entry.getKey()).toString())){
+                            bw.write("OK,"+entry.getKey()+","+snapshotUdfValues.get(entry.getKey()));
+                        }else{
+                            System.out.println(entry.getValue().toString()+"<>"+snapshotUdfValues.get(entry.getKey()).toString());
+                            bw.write("ERROR,"+entry.getKey()+","+snapshotUdfValues.get(entry.getKey()));
+                        }
+                    }else{
+                        bw.write("ERROR,,");
+                    }
+                }
+                bw.close();
+
+            }
+            catch(UnknownHostException e){
+                e.printStackTrace();
+            }
+
+        }catch(Exception e){
+            System.out.println("Cannot create temp file for report");
+        }
     }
+
+    public static SortedMap<String, Object> getUDFs (BasicDBObject doc, String key){
+        SortedMap<String, Object> udfValues = new TreeMap<>();
+        for (Map.Entry<String, Object> entry : doc.entrySet()) {
+            if (entry.getValue() instanceof BasicDBObject) {
+                udfValues.putAll(getUDFs((BasicDBObject) entry.getValue(), entry.getKey()));
+            } else {
+                if (String.valueOf(key) != ""){
+                    udfValues.put(key+"."+entry.getKey(), entry.getValue().toString().replace(",",";"));
+                } else {
+                    udfValues.put(entry.getKey(), entry.getValue().toString().replace(",",";"));
+                }
+
+            }
+        }
+        return udfValues;
+    }
+
+
 }
