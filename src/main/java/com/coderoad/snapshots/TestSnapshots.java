@@ -16,12 +16,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,22 +36,22 @@ public class TestSnapshots {
     private static String mqttHost = "localhost";
     private static int mqttPort = 1883;
     private static int qos = 2;
-    private static String mongoDatabase = "10.100.1.30";
 
     public static void main(String[] args) {
         try {
             int sequence = 10002;
-            String serialNumber = "RCC1000000014";
-            List<String> data = BlinkData.getCase0(serialNumber);
-            //Send MQTT message to the Core
-            if ( (data != null) && (!data.isEmpty()) ) {
-                for( String message : data ) {
-                    System.out.println(message);
-                    publish0(mqttHost , mqttPort, qos, "/v1/data/ALEBBrooklands0/item", message);
-                }
-            }
-            //Check Mongo
-            compare(serialNumber);
+            MongoDAOUtils.getInstance().setupMongodb("10.100.1.30",27017,"riot_main",2000000,50,"admin","control123!");
+
+            case1("CASE00001DBC");
+
+            case2("CASE00002DBC");
+
+            case3("CASE00003DBC");
+
+            case4("CASE00004DBC");
+
+            case5("CASE00005DBC");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,16 +124,15 @@ public class TestSnapshots {
         return result;
     }
 
-    public static void compare (String serialNumber) {
+    public static void compare (String serialNumber, int step) {
         SortedMap<String, Object> thingUdfValues = new TreeMap<>();
         SortedMap<String, Object> snapshotUdfValues = new TreeMap<>();
         try{
-            File csvFile = new File("/home/dev/TestSnapshots/output/compareSerial_"+serialNumber+".csv");
+            File csvFile = new File("/home/dbascope/dev/TestSnapshots/output/"+serialNumber+"_step"+step+".csv");
             BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile));
 
             //Check Mongo
             try{
-                MongoDAOUtils.getInstance().setupMongodb(mongoDatabase,27017,"riot_main",2000000,50,"admin","control123!");
                 DBObject query = new BasicDBObject();
                 query.put("serialNumber", serialNumber);
                 DBCursor cursor = MongoDAOUtils.getInstance().thingsCollection.find(query);
@@ -141,7 +141,11 @@ public class TestSnapshots {
                     thingUdfValues = getUDFs(doc, "");
                 }
 
-                MongoDAOUtils.getInstance().thingSnapshotsCollection.find(query);
+                DBObject sort= new BasicDBObject();
+                query = new BasicDBObject();
+                query.put("value._id", thingUdfValues.get("_id"));
+                sort.put("time", -1);
+                MongoDAOUtils.getInstance().thingSnapshotsCollection.find(query).sort(sort).limit(1);
                 for (Iterator<DBObject> it = cursor.iterator(); it.hasNext(); ) {
                     BasicDBObject doc = (BasicDBObject) it.next();
                     snapshotUdfValues = getUDFs(doc, "");
@@ -151,10 +155,11 @@ public class TestSnapshots {
                 for(Map.Entry<String,Object> entry : thingUdfValues.entrySet()) {
                     bw.write(System.lineSeparator()+entry.getKey()+","+entry.getValue()+",");
                     if (snapshotUdfValues.containsKey(entry.getKey())){
-                        if ((entry.getValue()).toString().equals(snapshotUdfValues.get(entry.getKey()).toString())){
+                        if (entry.getValue()!=null && (entry.getValue()).equals(snapshotUdfValues.get(entry.getKey()))){
                             bw.write("OK,"+entry.getKey()+","+snapshotUdfValues.get(entry.getKey()));
-                        }else{
-                            System.out.println(entry.getValue().toString()+"<>"+snapshotUdfValues.get(entry.getKey()).toString());
+                        }else if (entry.getValue()==null && snapshotUdfValues.get(entry.getKey())==null) {
+                            bw.write("OK,null,null");
+                        }else {
                             bw.write("ERROR,"+entry.getKey()+","+snapshotUdfValues.get(entry.getKey()));
                         }
                     }else{
@@ -169,26 +174,86 @@ public class TestSnapshots {
             }
 
         }catch(Exception e){
-            System.out.println("Cannot create temp file for report");
+            e.printStackTrace();
         }
     }
 
     public static SortedMap<String, Object> getUDFs (BasicDBObject doc, String key){
         SortedMap<String, Object> udfValues = new TreeMap<>();
-        for (Map.Entry<String, Object> entry : doc.entrySet()) {
-            if (entry.getValue() instanceof BasicDBObject) {
-                udfValues.putAll(getUDFs((BasicDBObject) entry.getValue(), entry.getKey()));
-            } else {
-                if (String.valueOf(key) != ""){
-                    udfValues.put(key+"."+entry.getKey(), entry.getValue().toString().replace(",",";"));
+        try {
+            for (Map.Entry<String, Object> entry : doc.entrySet()) {
+                if (entry.getValue() instanceof BasicDBObject) {
+                    udfValues.putAll(getUDFs((BasicDBObject) entry.getValue(), entry.getKey()));
                 } else {
-                    udfValues.put(entry.getKey(), entry.getValue().toString().replace(",",";"));
-                }
+                    if (!String.valueOf(key).isEmpty()) {
+                        udfValues.put(key + "." + entry.getKey(), entry.getValue().toString().replace(",", ";"));
+                    } else {
+                        udfValues.put(entry.getKey(), entry.getValue());
+                    }
 
+                }
             }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return udfValues;
     }
 
+    public static Map<String, String> case1 (String serialNumber) throws MqttException, InterruptedException {
+        Map<String, String> data = new LinkedHashMap<>();
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "183", 0));
+        data.putAll(BlinkData.getCase(serialNumber, "CLRCode", "None", 2));
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "317", 1));
+        iterate(data);
+        return data;
+    }
+
+    public static Map<String, String> case2 (String serialNumber) throws MqttException, InterruptedException {
+        Map<String, String> data = new LinkedHashMap<>();
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "183", 0));
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "183", 2));
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "317", 1));
+        iterate(data);
+        return data;
+    }
+
+    public static Map<String, String> case3 (String serialNumber) throws MqttException, InterruptedException {
+        Map<String, String> data = new LinkedHashMap<>();
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "183", 0));
+        data.putAll(BlinkData.getCase(serialNumber, "CLRCode", "Test", 2));
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "317", 1));
+        iterate(data);
+        return data;
+    }
+
+    public static Map<String, String> case4 (String serialNumber) throws MqttException, InterruptedException {
+        Map<String, String> data = new LinkedHashMap<>();
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "183", 0));
+        data.putAll(BlinkData.getCase(serialNumber, "CLRCode", "Test", 2));
+        data.putAll(BlinkData.getCase(serialNumber, "CLRCode", "New", 1));
+        iterate(data);
+        return data;
+    }
+
+    public static Map<String, String> case5 (String serialNumber) throws MqttException, InterruptedException {
+        Map<String, String> data = new LinkedHashMap<>();
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "183", 0));
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "317", 2));
+        data.putAll(BlinkData.getCase(serialNumber, "zone", "446", 1));
+        iterate(data);
+        return data;
+    }
+
+    public static void iterate (Map<String, String> data) throws MqttException, InterruptedException {
+        if ( (data != null) && (!data.isEmpty()) ) {
+            for (Map.Entry<String, String> message : data.entrySet()) {
+                System.out.println(message.getValue());
+                publish0(mqttHost , mqttPort, qos, "/v1/data/ALEBBrooklands0/item", message.getValue());
+                TimeUnit.SECONDS.sleep(2);
+                //Check Mongo
+                compare(message.getKey().substring(0, message.getKey().indexOf("_")), Integer.parseInt(message.getKey().substring(message.getKey().indexOf("_")+1)));
+            }
+        }
+    }
 
 }

@@ -3,7 +3,10 @@ package com.coderoad.snapshots;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,6 +60,18 @@ public class BlinkData {
         sb.append(System.lineSeparator());
         sb.append((new BlinkData(serialNumber,1471579200000L,"zone","S5241-L0-Sales")).toString());
         data.add(sb.toString());
+        return data;
+    }
+
+    public static Map<String, String> getCase(String serialNumber, String udf, String value, int step) {
+        //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
+        Map<String, String> data = new LinkedHashMap<>();
+        StringBuilder sb =  new StringBuilder("");
+        sb.append("sn,"+(int)((step+1)+Math.random()*1000));
+        sb.append(System.lineSeparator());
+        Long caseTimestamp = 1471579200000L + step * 3600000;
+        sb.append((new BlinkData(serialNumber,caseTimestamp,udf,value)).toString());
+        data.put(serialNumber+"_"+step, sb.toString());
         return data;
     }
 
