@@ -27,12 +27,11 @@ public class Utilities {
     private static String MQTT_HOST  = "localhost";
     private static int    MQTT_PORT  = 1883;
     private static int    QOS        = 2;
-    private static String PATH       = "C:/ini_ruth/WorkMojix/Vizix/";
-    private static String MONGODB    = "localhost";
+    private static String PATH       = "/home/dev/";
     public  static Long   DATE       = 1471579200000L; //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
-    private static String ALE_CODE   = "ALEB";
-    private static String THING_TYPE = "default_rfid_thingtype";
-    public  static String MONGO_DB   = "localhost";
+    private static String ALE_CODE   = "ALEBBrooklands0";
+    private static String THING_TYPE = "item";
+    public  static String MONGO_DB   = "10.100.1.30";
 
     public enum zonesPopDB {
         Enance("Enance"),Po1("Po1"),Saloor("Saloor"),Stroom("Stroom");
