@@ -115,14 +115,30 @@ public class Utilities {
                 System.out.println(codeValue.getName() + " does not exist in DB.");
                 return false;
             } else {
+                /*
+                * private String serialNumber;
+    private String name;
+    private String code;
+    private Date time;
+    private Integer dwellTime;
+    private Boolean changed;
+    private Date timeSnapshot;
+                * */
+
                 if( !dataBaseMap.get(a).getName().equals(codeValue.getName())  ) {
-                    System.out.println(codeValue.toString()+"-"+codeValue.getName() + " does not exist in DB.");
+                    System.out.println("Name-"+codeValue.toString()+"-"+codeValue.getName() + " does not exist in DB.");
                     return false;
-                } else if( !dataBaseMap.get(a).getType().equals(codeValue.getType())  ) {
-                    System.out.println(codeValue.toString()+"-"+codeValue.getType() + " does not exist in DB.");
+                } else if( !dataBaseMap.get(a).getCode().equals(codeValue.getCode())  ) {
+                    System.out.println(""+codeValue.toString()+"-"+codeValue.getCode() + " does not exist in DB.");
                     return false;
-                } else if( !dataBaseMap.get(a).getValue().equals(codeValue.getValue())  ) {
-                    System.out.println(codeValue.toString()+"-"+codeValue.getValue() + " does not exist in DB.");
+                } else if( dataBaseMap.get(a).getTime().compareTo(codeValue.getTime()) == 0 ) {
+                    System.out.println(codeValue.toString()+"-"+codeValue.getTime() + " does not exist in DB.");
+                    return false;
+                } else if( dataBaseMap.get(a).getDwellTime().compareTo(codeValue.getDwellTime()) == 0 ) {
+                    System.out.println(codeValue.toString()+"-"+codeValue.getDwellTime() + " does not exist in DB.");
+                    return false;
+                } else if( dataBaseMap.get(a).getChanged().compareTo(codeValue.getChanged()) == 0 ) {
+                    System.out.println(codeValue.toString()+"-"+codeValue.getChanged() + " does not exist in DB.");
                     return false;
                 }
             }
