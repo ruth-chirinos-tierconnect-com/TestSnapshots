@@ -17,14 +17,14 @@ public class CasesResults {
     public static List<CodeValue> case1Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Enance.value, 0, true, null, 0));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Enance.value, 0, true, null, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Enance.value, 2, true, null, 2));
         return result;
     }
     public static List<CodeValue> case1Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Enance.value, 1, true, null, 0));
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Saloor.value, 0, true, null, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Saloor.value, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Saloor.value, 2, true, null, 1));
         return result;
     }
 

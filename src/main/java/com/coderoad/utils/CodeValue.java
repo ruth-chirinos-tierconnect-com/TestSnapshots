@@ -1,5 +1,6 @@
 package com.coderoad.utils;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -32,7 +33,9 @@ public class CodeValue {
         this.name = name;
         this.code = code;
         this.time = new Date(Utilities.DATE + (step * 3600000));;
-        this.dwellTime = dwellTime;
+        Calendar aC = Calendar.getInstance();
+        aC.setTimeInMillis(dwellTime * 3600000);
+        this.dwellTime = (int) aC.getTimeInMillis();
         this.changed = changed;
         this.timeSnapshot = timeSnapshot;
     }
@@ -42,7 +45,9 @@ public class CodeValue {
         this.name = name;
         this.code = code;
         this.time = time;
-        this.dwellTime = dwellTime;
+        Calendar aC = Calendar.getInstance();
+        aC.setTimeInMillis(dwellTime * 3600000);
+        this.dwellTime = (int) aC.getTimeInMillis();
         this.changed = changed;
         this.timeSnapshot = timeSnapshot;
     }
