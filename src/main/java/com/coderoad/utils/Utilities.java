@@ -115,16 +115,6 @@ public class Utilities {
                 System.out.println(codeValue.getName() + " does not exist in DB.");
                 return false;
             } else {
-                /*
-                * private String serialNumber;
-    private String name;
-    private String code;
-    private Date time;
-    private Integer dwellTime;
-    private Boolean changed;
-    private Date timeSnapshot;
-                * */
-
                 if( !dataBaseMap.get(a).getName().equals(codeValue.getName())  ) {
                     System.out.println("Name-"+codeValue.toString()+"-"+codeValue.getName() + " does not exist in DB.");
                     return false;
