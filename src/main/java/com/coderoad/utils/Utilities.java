@@ -76,7 +76,7 @@ public class Utilities {
             for (String message : data) {
                 System.out.println(message);
                 publish0(MQTT_HOST, MQTT_PORT, QOS, "/v1/data/" + ALE_CODE + "/" + THING_TYPE, message);
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(1);
             }
         }
     }
@@ -108,10 +108,12 @@ public class Utilities {
      */
     public static boolean compareData(List<CodeValue> testMap, List<CodeValue> dataBaseMap) {
         boolean response  = true;
+        int a = 0;
         for (CodeValue codeValue : testMap) {
-            int a = dataBaseMap.indexOf(codeValue);
-            if( a == -1) {
-                System.out.println(codeValue.getName() + " does not exist in DB.");
+//            int a = dataBaseMap.indexOf(codeValue);
+//            if( a == -1) {
+            if (!String.valueOf(dataBaseMap.get(a)).equals(codeValue.toString())){
+                System.out.println("There are differences between results:\n\tExpected:\t"+codeValue.toString()+"\n\tObtained:\t"+dataBaseMap.get(a).toString());
                 return false;
             } else {
                 if( !dataBaseMap.get(a).getName().equals(codeValue.getName())  ) {
@@ -120,17 +122,18 @@ public class Utilities {
                 } else if( !dataBaseMap.get(a).getCode().equals(codeValue.getCode())  ) {
                     System.out.println(""+codeValue.toString()+"-"+codeValue.getCode() + " does not exist in DB.");
                     return false;
-                } else if( dataBaseMap.get(a).getTime().compareTo(codeValue.getTime()) == 0 ) {
+                } else if( dataBaseMap.get(a).getTime().compareTo(codeValue.getTime()) != 0 ) {
                     System.out.println(codeValue.toString()+"-"+codeValue.getTime() + " does not exist in DB.");
                     return false;
-                } else if( dataBaseMap.get(a).getDwellTime().compareTo(codeValue.getDwellTime()) == 0 ) {
+                } else if( dataBaseMap.get(a).getDwellTime().compareTo(codeValue.getDwellTime()) != 0 ) {
                     System.out.println(codeValue.toString()+"-"+codeValue.getDwellTime() + " does not exist in DB.");
                     return false;
-                } else if( dataBaseMap.get(a).getChanged().compareTo(codeValue.getChanged()) == 0 ) {
+                } else if( dataBaseMap.get(a).getChanged().compareTo(codeValue.getChanged()) != 0 ) {
                     System.out.println(codeValue.toString()+"-"+codeValue.getChanged() + " does not exist in DB.");
                     return false;
                 }
             }
+            a++;
         }
         return response;
     }

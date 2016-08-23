@@ -11,7 +11,7 @@ public class CodeValue {
     private String name;
     private String code;
     private Date time;
-    private Integer dwellTime;
+    private Long dwellTime;
     private Boolean changed;
     private Date timeSnapshot;
 
@@ -28,28 +28,28 @@ public class CodeValue {
         this.time = new Date(Utilities.DATE + (step * 3600000));
     }
 
-    CodeValue(String serialNumber, String name,String code, Integer dwellTime, Boolean changed, Date timeSnapshot,int step) {
+    CodeValue(String serialNumber, String name,String code, Long dwellTime, Boolean changed, int timeSnapshot,int step) {
         this.serialNumber = serialNumber;
         this.name = name;
         this.code = code;
-        this.time = new Date(Utilities.DATE + (step * 3600000));;
+        this.time = new Date(Utilities.DATE + (timeSnapshot * 3600000));;
         Calendar aC = Calendar.getInstance();
         aC.setTimeInMillis(dwellTime * 3600000);
-        this.dwellTime = (int) aC.getTimeInMillis();
+        this.dwellTime = aC.getTimeInMillis();
         this.changed = changed;
-        this.timeSnapshot = timeSnapshot;
+        this.timeSnapshot = aC.getTime();
     }
 
-    CodeValue(String serialNumber, String name,String code, Date time, Integer dwellTime, Boolean changed, Date timeSnapshot) {
+    CodeValue(String serialNumber, String name,String code, Date time, Long dwellTime, Boolean changed, Date timeSnapshot) {
         this.serialNumber = serialNumber;
         this.name = name;
         this.code = code;
         this.time = time;
         Calendar aC = Calendar.getInstance();
         aC.setTimeInMillis(dwellTime * 3600000);
-        this.dwellTime = (int) aC.getTimeInMillis();
+        this.dwellTime = aC.getTimeInMillis();
         this.changed = changed;
-        this.timeSnapshot = timeSnapshot;
+        this.timeSnapshot = aC.getTime();
     }
 
     public String getName() {
@@ -76,11 +76,11 @@ public class CodeValue {
         this.time = time;
     }
 
-    public Integer getDwellTime() {
+    public Long getDwellTime() {
         return dwellTime;
     }
 
-    public void setDwellTime(Integer dwellTime) {
+    public void setDwellTime(Long dwellTime) {
         this.dwellTime = dwellTime;
     }
 
@@ -110,7 +110,7 @@ public class CodeValue {
 
     @Override
     public String toString () {
-        return "Name:"+this.name +",Code:"+this.code+",Time:"+this.time+",DwellTime"+this.dwellTime+",Changed"+changed;
+        return "Name:"+this.name +",Code:"+this.code+",Time:"+this.time+",DwellTime:"+this.dwellTime+",Changed:"+changed+",timeSnapshot:"+timeSnapshot;
     }
 
     public String getTickleMessage() {
