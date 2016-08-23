@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class SnapshotTest {
 
-    String serialTest = "0000002";
+    String serialTest = "SNAPSHOT01";
 
     @Test(description = "[t1,t3,t2][A,B,A]")
     public void testCase1PopDB() {
