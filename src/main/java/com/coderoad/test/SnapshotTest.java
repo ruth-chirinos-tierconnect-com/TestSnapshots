@@ -24,9 +24,9 @@ import java.util.Map;
 public class SnapshotTest {
 
     String SERIAL_TEST = "SNAPSHOT01";
-    Map<String, Long> THING_IDS = new HashMap<>();
     boolean CLEAN_THINGS = false;
     String SERVICES_URL = "http://localhost:8080/riot-core-services";
+    Map<String, Long> thingIds = new HashMap<>();
 
     @Test(description = "[t1,t3,t2][A,B,A]")
     public void testCase1PopDB() {
@@ -40,7 +40,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case1Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            THING_IDS.putAll(CasesResults.THING_IDS);
+            thingIds.putAll(CasesResults.thingIds);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -73,7 +73,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case2Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            THING_IDS.putAll(CasesResults.THING_IDS);
+            thingIds.putAll(CasesResults.thingIds);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -105,7 +105,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case3Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            THING_IDS.putAll(CasesResults.THING_IDS);
+            thingIds.putAll(CasesResults.thingIds);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -138,7 +138,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case4Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            THING_IDS.putAll(CasesResults.THING_IDS);
+            thingIds.putAll(CasesResults.thingIds);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -170,7 +170,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case5Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            THING_IDS.putAll(CasesResults.THING_IDS);
+            thingIds.putAll(CasesResults.thingIds);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -202,7 +202,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case6Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            THING_IDS.putAll(CasesResults.THING_IDS);
+            thingIds.putAll(CasesResults.thingIds);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -234,7 +234,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case7Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            THING_IDS.putAll(CasesResults.THING_IDS);
+            thingIds.putAll(CasesResults.thingIds);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -261,8 +261,8 @@ public class SnapshotTest {
 
             String body = "[";
             int i = 0;
-            int things = THING_IDS.size();
-            for (Map.Entry<String, Long> entry : THING_IDS.entrySet()) {
+            int things = thingIds.size();
+            for (Map.Entry<String, Long> entry : thingIds.entrySet()) {
                 body += "{\"id\": " + entry.getValue() + "}";
                 i++;
                 if (i < things) {
