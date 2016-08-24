@@ -40,7 +40,7 @@ public class TestSnapshots {
     public static void main(String[] args) {
         try {
             int sequence = 10002;
-            MongoDAOUtils.getInstance().setupMongodb("10.100.1.30",27017,"riot_main",2000000,50,"admin","control123!");
+            MongoDAOUtils.getInstance().setupMongodb("localhost",27017,"riot_main",2000000,50,"admin","control123!");
 
             case1("CASE00001DBC");
 

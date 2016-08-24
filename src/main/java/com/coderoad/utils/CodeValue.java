@@ -28,16 +28,25 @@ public class CodeValue {
         this.time = new Date(Utilities.DATE + (step * 3600000));
     }
 
-    CodeValue(String serialNumber, String name,String code, Long dwellTime, Boolean changed, int timeSnapshot,int step) {
+    CodeValue(String serialNumber, String name,String code, Long dwellTime, Boolean changed, Integer timeSnapshot,int step) {
         this.serialNumber = serialNumber;
         this.name = name;
         this.code = code;
-        this.time = new Date(Utilities.DATE + (timeSnapshot * 3600000));;
-        Calendar aC = Calendar.getInstance();
-        aC.setTimeInMillis(dwellTime * 3600000);
-        this.dwellTime = aC.getTimeInMillis();
+        if (timeSnapshot!=null){
+            this.time = new Date(Utilities.DATE + (timeSnapshot * 3600000));
+        } else {
+            this.time = null;
+        }
+        if (dwellTime != null) {
+            Calendar aC = Calendar.getInstance();
+            aC.setTimeInMillis(dwellTime * 3600000);
+            this.dwellTime = aC.getTimeInMillis();
+            this.timeSnapshot = aC.getTime();
+        } else {
+            this.dwellTime = null;
+            this.timeSnapshot = null;
+        }
         this.changed = changed;
-        this.timeSnapshot = aC.getTime();
     }
 
     CodeValue(String serialNumber, String name,String code, Date time, Long dwellTime, Boolean changed, Date timeSnapshot) {
@@ -45,11 +54,16 @@ public class CodeValue {
         this.name = name;
         this.code = code;
         this.time = time;
-        Calendar aC = Calendar.getInstance();
-        aC.setTimeInMillis(dwellTime * 3600000);
-        this.dwellTime = aC.getTimeInMillis();
+        if (dwellTime != null) {
+            Calendar aC = Calendar.getInstance();
+            aC.setTimeInMillis(dwellTime * 3600000);
+            this.dwellTime = aC.getTimeInMillis();
+            this.timeSnapshot = aC.getTime();
+        } else {
+            this.dwellTime = null;
+            this.timeSnapshot = null;
+        }
         this.changed = changed;
-        this.timeSnapshot = aC.getTime();
     }
 
     public String getName() {

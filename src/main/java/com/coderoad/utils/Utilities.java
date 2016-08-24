@@ -5,7 +5,6 @@ import com.coderoad.snapshots.MongoDAOUtils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import org.bson.types.Code;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -76,7 +75,7 @@ public class Utilities {
             for (String message : data) {
                 System.out.println(message);
                 publish0(MQTT_HOST, MQTT_PORT, QOS, "/v1/data/" + ALE_CODE + "/" + THING_TYPE, message);
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(2);
             }
         }
     }
@@ -116,19 +115,19 @@ public class Utilities {
                 System.out.println("There are differences between results:\n\tExpected:\t"+codeValue.toString()+"\n\tObtained:\t"+dataBaseMap.get(a).toString());
                 return false;
             } else {
-                if( !dataBaseMap.get(a).getName().equals(codeValue.getName())  ) {
+                if( dataBaseMap.get(a).getName()!= null && !dataBaseMap.get(a).getName().equals(codeValue.getName())  ) {
                     System.out.println("Name-"+codeValue.toString()+"-"+codeValue.getName() + " does not exist in DB.");
                     return false;
-                } else if( !dataBaseMap.get(a).getCode().equals(codeValue.getCode())  ) {
+                } else if( dataBaseMap.get(a).getCode()!= null && !dataBaseMap.get(a).getCode().equals(codeValue.getCode())  ) {
                     System.out.println(""+codeValue.toString()+"-"+codeValue.getCode() + " does not exist in DB.");
                     return false;
-                } else if( dataBaseMap.get(a).getTime().compareTo(codeValue.getTime()) != 0 ) {
+                } else if( dataBaseMap.get(a).getTime()!= null && dataBaseMap.get(a).getTime().compareTo(codeValue.getTime()) != 0 ) {
                     System.out.println(codeValue.toString()+"-"+codeValue.getTime() + " does not exist in DB.");
                     return false;
-                } else if( dataBaseMap.get(a).getDwellTime().compareTo(codeValue.getDwellTime()) != 0 ) {
+                } else if( dataBaseMap.get(a).getDwellTime()!= null && dataBaseMap.get(a).getDwellTime().compareTo(codeValue.getDwellTime()) != 0 ) {
                     System.out.println(codeValue.toString()+"-"+codeValue.getDwellTime() + " does not exist in DB.");
                     return false;
-                } else if( dataBaseMap.get(a).getChanged().compareTo(codeValue.getChanged()) != 0 ) {
+                } else if( dataBaseMap.get(a).getChanged()!= null && dataBaseMap.get(a).getChanged().compareTo(codeValue.getChanged()) != 0 ) {
                     System.out.println(codeValue.toString()+"-"+codeValue.getChanged() + " does not exist in DB.");
                     return false;
                 }
