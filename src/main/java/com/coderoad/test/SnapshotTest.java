@@ -27,38 +27,6 @@ public class SnapshotTest {
     String serialTest = "SNAPSHOT10";
     static Map<String, Long> thingIds = new HashMap<>();
 
-    @AfterClass(alwaysRun=true)
-    public static void cleanUp (){
-        System.out.println("Removing test things...");
-/*        HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead
-
-        try {
-            HttpDelete request = new HttpDelete("http://localhost:8080/riot-core-services/api/thing/batchDelete");
-            String body ="[";
-            int i = 0;
-            int things = thingIds.size();
-            for (Map.Entry<String, Long> entry:thingIds.entrySet()){
-                body += "{\"id\": "+entry.getValue()+"}";
-                i++;
-                if (i<things){
-                    body += ',';
-                }
-            }
-            body +="]";
-            StringEntity params =new StringEntity("body="+body);
-            request.addHeader("content-type", "application/json");
-            request.addHeader("Api_key", "7B4BCCDC");
-            request.setEntity(params);
-            HttpResponse response = httpClient.execute(request);
-            System.out.println("Response:"+response);
-
-            // handle response here...
-        }catch (Exception ex) {
-            System.out.println("Error removing test things:"+ ex.getMessage());
-            // handle exception here
-        }*/
-    }
-
     @Test(description = "[t1,t3,t2][A,B,A]")
     public void testCase1PopDB() {
         System.out.println("Inside testCase1()");
