@@ -4,12 +4,6 @@ import com.coderoad.utils.CasesResults;
 import com.coderoad.utils.CodeValue;
 import com.coderoad.utils.Utilities;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
@@ -26,6 +20,8 @@ public class SnapshotTest {
 
     String serialTest = "SNAPSHOT10";
     static Map<String, Long> thingIds = new HashMap<>();
+
+
 
     @Test(description = "[t1,t3,t2][A,B,A]")
     public void testCase1PopDB() {
