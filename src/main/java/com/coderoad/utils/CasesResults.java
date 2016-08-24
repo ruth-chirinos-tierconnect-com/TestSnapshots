@@ -17,7 +17,7 @@ import java.util.logging.Level;
  */
 public class CasesResults {
 
-    public static Map<String, Long> thingIds = new HashMap<>();
+    public static Map<String, Long> THING_IDS = new HashMap<>();
 
     public static List<CodeValue> case1Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
@@ -175,7 +175,7 @@ public class CasesResults {
                     +"\t"+(time==null?"":time)
                     +"\t"+(dwellTime==null?0:(dwellTime*3600000))
                     +"\t"+(changed==null?"":changed));
-            thingIds.put(dbo.get("serialNumber").toString(), (Long) dbo.get("_id"));
+            THING_IDS.put(dbo.get("serialNumber").toString(), (Long) dbo.get("_id"));
         }
         return result;
     }

@@ -8,6 +8,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,16 +23,16 @@ import java.util.Map;
  */
 public class SnapshotTest {
 
-    String serialTest = "SNAPSHOT10";
-    static Map<String, Long> thingIds = new HashMap<>();
-
-
+    String SERIAL_TEST = "SNAPSHOT01";
+    Map<String, Long> THING_IDS = new HashMap<>();
+    boolean CLEAN_THINGS = false;
+    String SERVICES_URL = "http://localhost:8080/riot-core-services";
 
     @Test(description = "[t1,t3,t2][A,B,A]")
     public void testCase1PopDB() {
         System.out.println("Inside testCase1()");
         try {
-            String serialNumber = "CASE1"+serialTest;
+            String serialNumber = "CASE1"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
             data.addAll(Utilities.getCase(serialNumber, "status", "None", 3));
@@ -35,7 +40,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case1Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            thingIds.putAll(CasesResults.thingIds);
+            THING_IDS.putAll(CasesResults.THING_IDS);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -60,7 +65,7 @@ public class SnapshotTest {
     public void testCase2PopDB() {
         System.out.println("Inside testCase2()");
         try {
-            String serialNumber = "CASE2"+serialTest;
+            String serialNumber = "CASE2"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 3));
@@ -68,7 +73,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case2Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            thingIds.putAll(CasesResults.thingIds);
+            THING_IDS.putAll(CasesResults.THING_IDS);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -92,7 +97,7 @@ public class SnapshotTest {
     public void testCase3PopDB() {
         System.out.println("Inside testCase3()");
         try {
-            String serialNumber = "CASE3"+serialTest;
+            String serialNumber = "CASE3"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 3));
@@ -100,7 +105,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case3Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            thingIds.putAll(CasesResults.thingIds);
+            THING_IDS.putAll(CasesResults.THING_IDS);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -125,7 +130,7 @@ public class SnapshotTest {
     public void testCase4PopDB() {
         System.out.println("Inside testCase5()");
         try {
-            String serialNumber = "CASE4"+serialTest;
+            String serialNumber = "CASE4"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
             data.addAll(Utilities.getCase(serialNumber, "status", "None", 3));
@@ -133,7 +138,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case4Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            thingIds.putAll(CasesResults.thingIds);
+            THING_IDS.putAll(CasesResults.THING_IDS);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -157,7 +162,7 @@ public class SnapshotTest {
     public void testCase5PopDB() {
         System.out.println("Inside testCase5()");
         try {
-            String serialNumber = "CASE5"+serialTest;
+            String serialNumber = "CASE5"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 3));
@@ -165,7 +170,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case5Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            thingIds.putAll(CasesResults.thingIds);
+            THING_IDS.putAll(CasesResults.THING_IDS);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -189,7 +194,7 @@ public class SnapshotTest {
     public void testCase6PopDB() {
         System.out.println("Inside testCase6()");
         try {
-            String serialNumber = "CASE6"+serialTest;
+            String serialNumber = "CASE6"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
             data.addAll(Utilities.getCase(serialNumber, "status", "None", 1));
             data.addAll(Utilities.getCase(serialNumber, "status", "Change", 3));
@@ -197,7 +202,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case6Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            thingIds.putAll(CasesResults.thingIds);
+            THING_IDS.putAll(CasesResults.THING_IDS);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -221,7 +226,7 @@ public class SnapshotTest {
     public void testCase7PopDB() {
         System.out.println("Inside testCase7()");
         try {
-            String serialNumber = "CASE7"+serialTest;
+            String serialNumber = "CASE7"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 2));
             data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 3));
@@ -229,7 +234,7 @@ public class SnapshotTest {
 
             List<CodeValue> testData = CasesResults.case7Step1(serialNumber);
             List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
-            thingIds.putAll(CasesResults.thingIds);
+            THING_IDS.putAll(CasesResults.THING_IDS);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
@@ -247,6 +252,51 @@ public class SnapshotTest {
             e.printStackTrace();
         }
         System.out.println("End testCase7()");
+    }
+
+    @AfterClass(alwaysRun=true)
+    public void cleanUp (){
+        if (CLEAN_THINGS) {
+            System.out.println("Removing test things...");
+
+            String body = "[";
+            int i = 0;
+            int things = THING_IDS.size();
+            for (Map.Entry<String, Long> entry : THING_IDS.entrySet()) {
+                body += "{\"id\": " + entry.getValue() + "}";
+                i++;
+                if (i < things) {
+                    body += ',';
+                }
+            }
+            body += "]";
+
+            URL url = null;
+            try {
+                url = new URL(SERVICES_URL + "/api/thing/batchDelete");
+            } catch (MalformedURLException exception) {
+                exception.printStackTrace();
+            }
+            HttpURLConnection httpURLConnection = null;
+            DataOutputStream dataOutputStream = null;
+            try {
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+                httpURLConnection.setRequestMethod("DELETE");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+                dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+                dataOutputStream.writeChars(body);
+                System.out.println(httpURLConnection.getResponseCode() + ": " + httpURLConnection.getResponseMessage());
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            } finally {
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
+            }
+        }
     }
 
 }
