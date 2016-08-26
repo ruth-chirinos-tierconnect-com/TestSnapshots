@@ -23,8 +23,8 @@ import java.util.Map;
  */
 public class SnapshotTest {
 
-    String SERIAL_TEST = "SNAPSHOT01";
-    boolean CLEAN_THINGS = false;
+    String SERIAL_TEST = "SNAPSHOT08";
+    boolean CLEAN_THINGS = true;
     String SERVICES_URL = "http://localhost:8080/riot-core-services";
     Map<String, Long> thingIds = new HashMap<>();
 
@@ -34,8 +34,8 @@ public class SnapshotTest {
         try {
             String serialNumber = "CASE1"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
-            data.addAll(Utilities.getCase(serialNumber, "status", "None", 3));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1));
+            data.addAll(Utilities.getCase(serialNumber, "Status", "None", 3));
             Utilities.sendTickles(data);
 
             List<CodeValue> testData = CasesResults.case1Step1(serialNumber);
@@ -46,7 +46,7 @@ public class SnapshotTest {
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
 
             data.clear();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 2));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.DerbyExcluded.value, 2));
             Utilities.sendTickles(data);
 
             testData = CasesResults.case1Step2(serialNumber);
@@ -67,8 +67,8 @@ public class SnapshotTest {
         try {
             String serialNumber = "CASE2"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 3));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.DerbyExcluded.value, 3));
             Utilities.sendTickles(data);
 
             List<CodeValue> testData = CasesResults.case2Step1(serialNumber);
@@ -99,8 +99,8 @@ public class SnapshotTest {
         try {
             String serialNumber = "CASE3"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 3));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.DerbyExcluded.value, 3));
             Utilities.sendTickles(data);
 
             List<CodeValue> testData = CasesResults.case3Step1(serialNumber);
@@ -112,7 +112,7 @@ public class SnapshotTest {
 
             data.clear();
 //            data.addAll(Utilities.getCase(serialNumber, "status", "None", 2));
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 2));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.DerbyExcluded.value, 2));
             Utilities.sendTickles(data);
 
             testData = CasesResults.case3Step2(serialNumber);
@@ -132,7 +132,7 @@ public class SnapshotTest {
         try {
             String serialNumber = "CASE4"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1));
             data.addAll(Utilities.getCase(serialNumber, "status", "None", 3));
             Utilities.sendTickles(data);
 
@@ -164,8 +164,8 @@ public class SnapshotTest {
         try {
             String serialNumber = "CASE5"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 1));
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 3));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.DerbyExcluded.value, 3));
             Utilities.sendTickles(data);
 
             List<CodeValue> testData = CasesResults.case5Step1(serialNumber);
@@ -176,7 +176,7 @@ public class SnapshotTest {
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
 
             data.clear();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Po1.value, 2));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.FosseExcluded.value, 2));
             Utilities.sendTickles(data);
 
             testData = CasesResults.case5Step2(serialNumber);
@@ -208,7 +208,7 @@ public class SnapshotTest {
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
 
             data.clear();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 2));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2));
             Utilities.sendTickles(data);
 
             testData = CasesResults.case6Step2(serialNumber);
@@ -228,8 +228,8 @@ public class SnapshotTest {
         try {
             String serialNumber = "CASE7"+SERIAL_TEST;
             List<String> data = new ArrayList<>();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 2));
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Enance.value, 3));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 3));
             Utilities.sendTickles(data);
 
             List<CodeValue> testData = CasesResults.case7Step1(serialNumber);
@@ -240,10 +240,43 @@ public class SnapshotTest {
             Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
 
             data.clear();
-            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesPopDB.Saloor.value, 1));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.DerbyExcluded.value, 1));
             Utilities.sendTickles(data);
 
             testData = CasesResults.case7Step2(serialNumber);
+            resultDB = CasesResults.casesStepDB(serialNumber);
+            Assert.assertEquals(testData.size()== resultDB.size(), true
+                    , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
+            Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step2." );
+        } catch (Exception e ) {
+            e.printStackTrace();
+        }
+        System.out.println("End testCase7()");
+    }
+
+
+    @Test(description = "[t3,t1,t2][A,A,A]")
+    public void testCase8PopDB() {
+        System.out.println("Inside testCase7()");
+        try {
+            String serialNumber = "CASE7"+SERIAL_TEST;
+            List<String> data = new ArrayList<>();
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1));
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 3));
+            Utilities.sendTickles(data);
+
+            List<CodeValue> testData = CasesResults.case8Step1(serialNumber);
+            List<CodeValue> resultDB = CasesResults.casesStepDB(serialNumber);
+            thingIds.putAll(CasesResults.thingIds);
+            Assert.assertEquals(testData.size()== resultDB.size(), true
+                    , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());
+            Assert.assertEquals(Utilities.compareData(testData,resultDB), true, "Data is inconsistent in step1." );
+
+            data.clear();
+            data.addAll(Utilities.getCase(serialNumber, "zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2));
+            Utilities.sendTickles(data);
+
+            testData = CasesResults.case8Step2(serialNumber);
             resultDB = CasesResults.casesStepDB(serialNumber);
             Assert.assertEquals(testData.size()== resultDB.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ resultDB.size()+", they must be "+testData.size());

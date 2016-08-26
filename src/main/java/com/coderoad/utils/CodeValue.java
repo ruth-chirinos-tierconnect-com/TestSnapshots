@@ -14,8 +14,16 @@ public class CodeValue {
     private Long dwellTime;
     private Boolean changed;
     private Date timeSnapshot;
+    private int step;
 
-//    CodeValue(String name, String code, int step, Boolean changed) {
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
+    }
+    //    CodeValue(String name, String code, int step, Boolean changed) {
 //        this.name = name;
 //        this.code = code;
 //        this.time = new Date(Utilities.DATE + (step * 3600000));
@@ -29,6 +37,7 @@ public class CodeValue {
     }
 
     CodeValue(String serialNumber, String name,String code, Long dwellTime, Boolean changed, Integer timeSnapshot,int step) {
+        this.step = step;
         this.serialNumber = serialNumber;
         this.name = name;
         this.code = code;

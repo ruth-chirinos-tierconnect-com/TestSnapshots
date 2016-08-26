@@ -3,6 +3,7 @@ package com.coderoad.utils;
 import com.coderoad.snapshots.BlinkData;
 import com.coderoad.snapshots.MongoDAOUtils;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -28,15 +29,26 @@ public class Utilities {
     private static int    QOS        = 2;
     private static String PATH       = "/home/dev/";
     public  static Long   DATE       = 1471579200000L; //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
-    private static String ALE_CODE   = "ALEB";
-    private static String THING_TYPE = "default_rfid_thingtype";
+    private static String ALE_CODE   = "ALEBBrooklands0";
+    private static String THING_TYPE = "item";
     public  static String MONGO_DB   = "localhost";
+
+
 
     public enum zonesPopDB {
         Enance("Enance"),Po1("Po1"),Saloor("Saloor"),Stroom("Stroom");
         public String value;
 
         zonesPopDB(String data) {
+            this.value = data;
+        }
+    }
+
+    public enum zonesMnS {
+        BrooklandsExcluded("BrooklandsExcluded"),DerbyExcluded("DerbyExcluded"),FosseExcluded("FosseExcluded"),ReassociationBrooklands("ReassociationBrooklands");
+        public String value;
+
+        zonesMnS(String data) {
             this.value = data;
         }
     }
