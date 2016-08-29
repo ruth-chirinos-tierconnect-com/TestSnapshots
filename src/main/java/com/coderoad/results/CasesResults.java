@@ -210,8 +210,8 @@ public class CasesResults {
             result.add(new CodeValue(serialNumber,"zone", code, time, dwellTime, changed));
             System.out.println(((new SimpleDateFormat("HH:mm:ss")).format(step))+"-->\t"+(code==null?"":code)
                     +"\t"+(time==null?"":time)
-                    +"\t"+((new SimpleDateFormat("HH:mm:ss")).format((new Date(
-                    (dwellTime==null?0:dwellTime*Utilities.getStep()+Utilities.getDate())))))
+                    +"\t"+(dwellTime==null?"":(new SimpleDateFormat("HH:mm:ss")).format((new Date(
+                    (dwellTime*Utilities.getStep()+Utilities.getDate())))))
                     +"\t"+(changed==null?"":changed));
             thingIds.put(dbo.get("serialNumber").toString(), (Long) dbo.get("_id"));
         }
