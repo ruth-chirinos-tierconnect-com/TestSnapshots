@@ -9,9 +9,11 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -31,17 +33,18 @@ public class Utilities {
     private static String PATH          = "/home/dev/";
     private static Long   DATE          = 1471579200000L; //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
     private static int    STEP          = 3600000; //One hour
-    private static String ALE_CODE      = "ALEBBrooklands0";
-    private static String THING_TYPE    = "item";
+    private static String ALE_CODE      = "ALEB";
+    private static String THING_TYPE    = "default_rfid_thingtype";
     private static String MONGO_DB      = "localhost";
-    private static boolean CLEAN_THINGS = true;
+    private static boolean CLEAN_THINGS = false;
+    private static int    SLEEP         = 2; //One hour
     private static String SERVICES_URL  = "http://localhost:8080/riot-core-services";
     private static Map<String, Long> thingIds = new HashMap<>();
 
 
 
     public enum zonesPopDB {
-        Enance("Enance"),Po1("Po1"),Saloor("Saloor"),Stroom("Stroom");
+        A("Enance"),B("Po1"),C("Saloor"),D("Stroom"),E("EnanceCP"),F("SaloorCP");
         public String value;
 
         zonesPopDB(String data) {
@@ -50,7 +53,7 @@ public class Utilities {
     }
 
     public enum zonesMnS {
-        BrooklandsExcluded("BrooklandsExcluded"),DerbyExcluded("DerbyExcluded"),FosseExcluded("FosseExcluded"),ReassociationBrooklands("ReassociationBrooklands");
+        A("BrooklandsExcluded"),B("DerbyExcluded"),C("FosseExcluded"),D("ReassociationBrooklands");
         public String value;
 
         zonesMnS(String data) {
@@ -108,7 +111,7 @@ public class Utilities {
             for (String message : data) {
                 System.out.println(message);
                 publish0(MQTT_HOST, MQTT_PORT, QOS, "/v1/data/" + ALE_CODE + "/" + THING_TYPE, message);
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(SLEEP);
             }
         }
     }
@@ -278,5 +281,49 @@ public class Utilities {
                 }
             }
         }
+    }
+
+    public static List<String> readFile (String fileName, int sequence){
+        Long dateTimestamp = 1470009600000L;
+        dateTimestamp = dateTimestamp + 3600000L;
+        List<String> result = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("/home/dev/TestSnapshots/src/main/resources/"+fileName));
+            try {
+                StringBuilder sb = new StringBuilder("");
+                String line = br.readLine();
+                line = line.replace("&", sequence+"");
+                line = line.replace("#", dateTimestamp+"");
+                int count = 1;
+                int position = 0;
+                while (line != null) {
+                    position = Integer.parseInt(line.subSequence(0,1)+"");
+
+                    if (position != count ) {
+                        result.add((count-1), sb.toString());
+                        sb = new StringBuilder();
+                        count = position;
+                        dateTimestamp = dateTimestamp + 3600000L;
+                    }
+                    line = line.replace("&", sequence+"");
+                    line = line.replace("#", dateTimestamp+"");
+                    sb.append("sn," + (int) ((1 + Math.random() * 1000)));
+                    sb.append(line.substring(2, line.length()));
+                    line = br.readLine();
+                    List<String> data = new ArrayList<>();
+
+//                    result.addAll(Utilities.getCase(serialNumber, udf, value, step));
+
+                }
+                if ((sb!=null) && (sb.length()>0)) {
+                    result.add((count-1), sb.toString());
+                }
+            } finally {
+                br.close();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

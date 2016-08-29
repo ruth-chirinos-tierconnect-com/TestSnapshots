@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 /**
@@ -26,81 +27,81 @@ public class CasesResults {
     public static List<CodeValue> case1Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
 //                     CodeValue(serialNumber, name,   code,                    dwellTime,changed,timeSnapshot,step) {
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, false, 1, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, false, 1, 3));
         CasesResults.print(result);
         return result;
     }
     public static List<CodeValue> case1Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
 //                     CodeValue(serialNumber, name,   code,                    dwellTime,changed,timeSnapshot,step) {
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 0L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 1L, false, 2, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 1L, false, 2, 3));
         CasesResults.print(result);
         return result;
     }
 
     public static List<CodeValue> case2Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 0L, true, 3, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 3, 3));
         CasesResults.print(result);
         return result;
     }
     public static List<CodeValue> case2Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, false, 1, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 0L, true, 3, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, false, 1, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 3, 3));
         CasesResults.print(result);
         return result;
     }
 
     public static List<CodeValue> case3Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 0L, true, 3, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 3, 3));
         CasesResults.print(result);
         return result;
     }
     public static List<CodeValue> case3Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 0L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 1L, false, 2, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 1L, false, 2, 3));
         CasesResults.print(result);
         return result;
     }
 
     public static List<CodeValue> case4Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, false, 1, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, false, 1, 3));
         CasesResults.print(result);
         return result;
     }
     public static List<CodeValue> case4Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, false, 1, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, false, 1, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, false, 1, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, false, 1, 3));
         CasesResults.print(result);
         return result;
     }
 
     public static List<CodeValue> case5Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 0L, true, 3, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 3, 3));
         CasesResults.print(result);
         return result;
     }
     public static List<CodeValue> case5Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.FosseExcluded.value, 1L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 0L, true, 3, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.C.value, 1L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 3, 3));
         CasesResults.print(result);
         return result;
     }
@@ -115,45 +116,62 @@ public class CasesResults {
     public static List<CodeValue> case6Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
         result.add(new CodeValue(serialNumber,"zone", null, null, null, null, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, false, 2, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, false, 2, 3));
         CasesResults.print(result);
         return result;
     }
 
     public static List<CodeValue> case7Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, false, 2, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, false, 2, 3));
         CasesResults.print(result);
         return result;
     }
     public static List<CodeValue> case7Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 1L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, false, 2, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 1L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, false, 2, 3));
         CasesResults.print(result);
         return result;
     }
 
     public static List<CodeValue> case8Step1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, false, 1, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, false, 1, 3));
         CasesResults.print(result);
         return result;
     }
     public static List<CodeValue> case8Step2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 0L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, false, 1, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 2L, false, 1, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, false, 1, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, false, 1, 3));
         CasesResults.print(result);
         return result;
     }
 
-    public static List<CodeValue> casesStepDB(String serialNumber) throws UnknownHostException {
+    public static List<CodeValue> case9Step1(String serialNumber) {
+        List<CodeValue> result = new ArrayList<>();
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, false, 1, 3));
+        CasesResults.print(result);
+        return result;
+    }
+    public static List<CodeValue> case9Step2(String serialNumber) {
+        List<CodeValue> result = new ArrayList<>();
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.E.value, 0L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.E.value, 1L, false, 2, 3));
+        CasesResults.print(result);
+        return result;
+    }
+
+    public static List<CodeValue> casesStepDB(String serialNumber) throws Exception {
+        MongoDAOUtils.getInstance().setupMongodb(Utilities.getMongoDB(),27017,"riot_main",2000000,50,"admin","control123!");
         java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
         List<CodeValue> result = new ArrayList<>();
         BasicDBObject query  = new BasicDBObject();
@@ -200,7 +218,8 @@ public class CasesResults {
         return result;
     }
 
-    public static List<CodeValue> casesStepDBThings(String serialNumber) throws UnknownHostException {
+    public static List<CodeValue> casesStepDBThings(String serialNumber) throws Exception {
+        MongoDAOUtils.getInstance().setupMongodb(Utilities.getMongoDB(),27017,"riot_main",2000000,50,"admin","control123!");
         java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
         List<CodeValue> result = new ArrayList<>();
         BasicDBObject query  = new BasicDBObject();
@@ -255,7 +274,7 @@ public class CasesResults {
     public static List<CodeValue> case1Now1(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
 //                     CodeValue(serialNumber, name,   code,                    dwellTime,changed,timeSnapshot,step) {
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Po1.value, null, null, 4, 5));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, null, null, 4, 5));
         CasesResults.print(result);
         return result;
     }
@@ -263,16 +282,16 @@ public class CasesResults {
     public static List<CodeValue> case1Now2(String serialNumber) {
         List<CodeValue> result = new ArrayList<>();
 //                     CodeValue(serialNumber, name,   code,                    dwellTime,changed,timeSnapshot,step) {
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.BrooklandsExcluded.value, 1L, true, 1, 1));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 2L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 1L, false, 2, 3));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Po1.value, 2L, true, 4, 4));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Po1.value, 1L, false, 4, 5));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Stroom.value, 3L, true, 6, 6));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Stroom.value, 1L, false, 6, 7));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Stroom.value, 2L, false, 6, 8));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesMnS.DerbyExcluded.value, 1L, true, 9, 9));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.Po1.value, 0L, true, 10, 10));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 1L, true, 1, 1));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 2L, true, 2, 2));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 1L, false, 2, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 2L, true, 4, 4));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 1L, false, 4, 5));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.D.value, 3L, true, 6, 6));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.D.value, 1L, false, 6, 7));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.D.value, 2L, false, 6, 8));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 1L, true, 9, 9));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.B.value, 0L, true, 10, 10));
         CasesResults.print(result);
         return result;
     }
