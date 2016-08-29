@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,14 +19,10 @@ import java.util.Map;
  * Created by IntelliJ IDEA.
  *
  * @author : dbascope
- * @date : 8/25/16 5:48 PM
- * @version:
  */
 public class CustomNowTest {
     String SERIAL_TEST = "REPORT10";
-    boolean CLEAN_THINGS = false;
-    String SERVICES_URL = "http://localhost:8080/riot-core-services";
-    Map<String, Long> thingIds = new HashMap<>();
+    Map<String, Long> thingIds = Utilities.getThingIds();
 
     @BeforeClass(alwaysRun = true)
     public void initMongo() throws UnknownHostException {
