@@ -1,6 +1,8 @@
-package com.coderoad.utils;
+package com.coderoad.results;
 
-import com.coderoad.snapshots.MongoDAOUtils;
+import com.coderoad.utils.CodeValue;
+import com.coderoad.utils.MongoDAOUtils;
+import com.coderoad.utils.Utilities;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 
@@ -15,6 +17,7 @@ import java.util.logging.Level;
 
 /**
  * Created by RUTH on 16/08/21.
+ * Cases results for SnapshotTest
  */
 public class CasesResults {
 
@@ -153,7 +156,6 @@ public class CasesResults {
     public static List<CodeValue> casesStepDB(String serialNumber) throws UnknownHostException {
         java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
         List<CodeValue> result = new ArrayList<>();
-        MongoDAOUtils.getInstance().setupMongodb(Utilities.MONGO_DB,27017,"riot_main",2000000,50,"admin","control123!");
         BasicDBObject query  = new BasicDBObject();
         query.put("value.serialNumber", serialNumber);
         BasicDBObject projection  = new BasicDBObject();
@@ -166,7 +168,6 @@ public class CasesResults {
         System.out.println("Obtained result:");
         while(cursor.hasNext()) {
             BasicDBObject doc = (BasicDBObject) cursor.next();
-            Date timeSnapshot = (Date) doc.get("time");
             BasicDBObject dbo = (BasicDBObject) doc.get("value");
             BasicDBObject dbval = (BasicDBObject) dbo.get("zone");
 
@@ -179,8 +180,8 @@ public class CasesResults {
 
             if (dbval!=null){
                 time       = (Date)    dbval.get("time");
-                dwellTime  = (Long) dbval.get("dwellTime")/3600000;
-                changed    = (Boolean) dbval.get("changed")==null?false:(Boolean) dbval.get("changed");
+                dwellTime  = (Long) dbval.get("dwellTime")/Utilities.getStep();
+                changed    = dbval.get("changed")==null?false:(Boolean) dbval.get("changed");
                 dbzone     = (BasicDBObject) dbval.get("value");
                 if (dbzone!=null){
                     code       = dbzone.get("code").toString();
@@ -188,11 +189,11 @@ public class CasesResults {
             }
 
 
-            result.add(new CodeValue(serialNumber,"zone", code, time, dwellTime, changed, timeSnapshot));
+            result.add(new CodeValue(serialNumber,"zone", code, time, dwellTime, changed));
             System.out.println(((new SimpleDateFormat("HH:mm:ss")).format(step))+"-->\t"+(code==null?"":code)
                     +"\t"+(time==null?"":time)
                     +"\t"+((new SimpleDateFormat("HH:mm:ss")).format((new Date(
-                    (dwellTime==null?0:dwellTime*3600000+1471579200000L)))))
+                    (dwellTime==null?0:dwellTime*Utilities.getStep()+Utilities.getDate())))))
                     +"\t"+(changed==null?"":changed));
             thingIds.put(dbo.get("serialNumber").toString(), (Long) dbo.get("_id"));
         }
@@ -202,7 +203,6 @@ public class CasesResults {
     public static List<CodeValue> casesStepDBThings(String serialNumber) throws UnknownHostException {
         java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
         List<CodeValue> result = new ArrayList<>();
-        MongoDAOUtils.getInstance().setupMongodb(Utilities.MONGO_DB,27017,"riot_main",2000000,50,"admin","control123!");
         BasicDBObject query  = new BasicDBObject();
         query.put("serialNumber", serialNumber);
         BasicDBObject projection  = new BasicDBObject();
@@ -216,12 +216,9 @@ public class CasesResults {
         System.out.println("Obtained result:");
         while(cursor.hasNext()) {
             BasicDBObject doc = (BasicDBObject) cursor.next();
-            Date timeSnapshot = (Date) doc.get("time");
             BasicDBObject dbval = (BasicDBObject) doc.get("zone");
 
             Date   time       = null;
-            Long dwellTime    = null;
-            Boolean changed   = null;
             BasicDBObject dbzone;
             String code       = null;
 
@@ -234,11 +231,8 @@ public class CasesResults {
             }
 
 
-            result.add(new CodeValue(serialNumber,"zone", code, time, dwellTime, changed, timeSnapshot));
-            System.out.println("-->\t"+(code==null?"":code)
-                    +"\t"+(time==null?"":time)
-                    +"\t"+(dwellTime==null?0:(dwellTime*3600000))
-                    +"\t"+(changed==null?"":changed));
+            result.add(new CodeValue(serialNumber,"zone", code, time, null, null));
+            System.out.println("-->\t"+(code==null?"":code)+"\t"+(time==null?"":time)+"\t0\t");
             thingIds.put(doc.get("serialNumber").toString(), (Long) doc.get("_id"));
         }
         return result;
@@ -248,10 +242,11 @@ public class CasesResults {
         System.out.println("Expected Result:");
         for (CodeValue code : list){
             System.out.println(((new SimpleDateFormat("HH:mm:ss")).format((new Date(code
-                    .getStep()*3600000+1471579200000L))))+"-->\t"+(code.getCode()==null?"":code.getCode())
+                    .getStep()*Utilities.getStep()+Utilities.getDate()))))+"-->\t"+(code.getCode()==null?"":code
+                    .getCode())
                     +"\t"+(code.getTime()==null?"":code.getTime())
                     +"\t"+(code.getDwellTime()==null?"":((new SimpleDateFormat("HH:mm:ss")).format((new Date(code
-                    .getDwellTime()+1471579200000L)))))
+                    .getDwellTime()+Utilities.getDate())))))
                     +(code.getDwellTime()==null||code.getDwellTime()==0?"\t":"")+"\t"
                     +(code.getChanged()==null?"":code.getChanged()));
         }

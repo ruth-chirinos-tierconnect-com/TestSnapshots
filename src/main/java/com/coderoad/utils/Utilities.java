@@ -1,9 +1,6 @@
 package com.coderoad.utils;
 
-import com.coderoad.snapshots.BlinkData;
-import com.coderoad.snapshots.MongoDAOUtils;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -13,25 +10,33 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by RUTH on 16/08/21.
+ * Contains utilities for test cases
  */
 public class Utilities {
 
-    private static String MQTT_HOST  = "localhost";
-    private static int    MQTT_PORT  = 1883;
-    private static int    QOS        = 2;
-    private static String PATH       = "/home/dev/";
-    public  static Long   DATE       = 1471579200000L; //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
-    private static String ALE_CODE   = "ALEBBrooklands0";
-    private static String THING_TYPE = "item";
-    public  static String MONGO_DB   = "localhost";
+    private static String MQTT_HOST     = "localhost";
+    private static int    MQTT_PORT     = 1883;
+    private static int    QOS           = 2;
+    private static String PATH          = "/home/dev/";
+    private static Long   DATE          = 1471579200000L; //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
+    private static int    STEP          = 3600000; //One hour
+    private static String ALE_CODE      = "ALEBBrooklands0";
+    private static String THING_TYPE    = "item";
+    private static String MONGO_DB      = "localhost";
+    private static boolean CLEAN_THINGS = true;
+    private static String SERVICES_URL  = "http://localhost:8080/riot-core-services";
+    private static Map<String, Long> thingIds = new HashMap<>();
 
 
 
@@ -51,6 +56,22 @@ public class Utilities {
         zonesMnS(String data) {
             this.value = data;
         }
+    }
+
+    public static Long getDate(){
+        return DATE;
+    }
+
+    public static int getStep(){
+        return STEP;
+    }
+
+    public static String getMongoDB(){
+        return MONGO_DB;
+    }
+
+    public static Map<String, Long> getThingIds(){
+        return thingIds;
     }
 
     /**
@@ -94,35 +115,31 @@ public class Utilities {
 
     /**
      *  Set case to be executed
-     * @param serialNumber
-     * @param udf
-     * @param value
-     * @param step
-     * @return
+     * @param serialNumber: serialNumber to create thing
+     * @param udf: udf name
+     * @param value: udf value
+     * @param step: step of test
+     * @return data for message
      */
     public static List<String> getCase(String serialNumber, String udf, String value, int step) {
         List<String> data = new ArrayList<>();
-        StringBuilder sb =  new StringBuilder("");
-        sb.append("sn,"+(int)((step+1)+Math.random()*1000));
-        sb.append(System.lineSeparator());
-        Long caseTimestamp = DATE + step * 3600000;
-        sb.append((new BlinkData(serialNumber,caseTimestamp,udf,value)).toString());
-        data.add(sb.toString());
+        Long caseTimestamp = DATE + step * Utilities.STEP;
+        String sb = "" + "sn," + (int) ((step + 1) + Math.random() * 1000) +
+                System.lineSeparator() +
+                (new BlinkData(serialNumber, caseTimestamp, udf, value)).toString();
+        data.add(sb);
         return data;
     }
 
     /**
      * Compare Data
-     * @param testMap
-     * @param dataBaseMap
-     * @return
+     * @param testMap: Map result from test
+     * @param dataBaseMap: Map result from database
+     * @return false if there are differences between maps
      */
     public static boolean compareData(List<CodeValue> testMap, List<CodeValue> dataBaseMap) {
-        boolean response  = true;
         int a = 0;
         for (CodeValue codeValue : testMap) {
-//            int a = dataBaseMap.indexOf(codeValue);
-//            if( a == -1) {
             if (!String.valueOf(dataBaseMap.get(a)).equals(codeValue.toString())){
                 System.out.println("There are differences between results:\n\tExpected:\t"+codeValue.toString()+"\n\tObtained:\t"+dataBaseMap.get(a).toString());
                 return false;
@@ -146,11 +163,8 @@ public class Utilities {
             }
             a++;
         }
-        return response;
+        return true;
     }
-
-
-
 
     public static void compare (String serialNumber, int step) {
         SortedMap<String, Object> thingUdfValues = new TreeMap<>();
@@ -164,8 +178,8 @@ public class Utilities {
                 DBObject query = new BasicDBObject();
                 query.put("serialNumber", serialNumber);
                 DBCursor cursor = MongoDAOUtils.getInstance().thingsCollection.find(query);
-                for (Iterator<DBObject> it = cursor.iterator(); it.hasNext(); ) {
-                    BasicDBObject doc = (BasicDBObject) it.next();
+                for (DBObject aCursor1 : cursor) {
+                    BasicDBObject doc = (BasicDBObject) aCursor1;
                     thingUdfValues = getUDFs(doc, "");
                 }
 
@@ -174,8 +188,8 @@ public class Utilities {
                 query.put("value._id", thingUdfValues.get("_id"));
                 sort.put("time", -1);
                 MongoDAOUtils.getInstance().thingSnapshotsCollection.find(query).sort(sort).limit(1);
-                for (Iterator<DBObject> it = cursor.iterator(); it.hasNext(); ) {
-                    BasicDBObject doc = (BasicDBObject) it.next();
+                for (DBObject aCursor : cursor) {
+                    BasicDBObject doc = (BasicDBObject) aCursor;
                     snapshotUdfValues = getUDFs(doc, "");
                 }
 
@@ -225,5 +239,44 @@ public class Utilities {
             e.printStackTrace();
         }
         return udfValues;
+    }
+
+    public static void cleanUp (){
+        if (CLEAN_THINGS) {
+            System.out.println("Removing test things...");
+
+            String body = "[";
+            int i = 0;
+            int things = thingIds.size();
+            for (Map.Entry<String, Long> entry : thingIds.entrySet()) {
+                body += "{\"id\": " + entry.getValue() + "}";
+                i++;
+                if (i < things) {
+                    body += ',';
+                }
+            }
+            body += "]";
+
+            HttpURLConnection httpURLConnection = null;
+            DataOutputStream dataOutputStream;
+            try {
+                URL url = new URL(SERVICES_URL + "/api/thing/batchDelete");
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+                httpURLConnection.setRequestMethod("DELETE");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+                dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+                dataOutputStream.writeChars(body);
+                System.out.println(httpURLConnection.getResponseCode() + ": " + httpURLConnection.getResponseMessage());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            } finally {
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
+            }
+        }
     }
 }

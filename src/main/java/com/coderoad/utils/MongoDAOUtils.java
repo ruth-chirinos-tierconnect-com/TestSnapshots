@@ -1,4 +1,4 @@
-package com.coderoad.snapshots;
+package com.coderoad.utils;
 
 /**
  * Created by IntelliJ IDEA.

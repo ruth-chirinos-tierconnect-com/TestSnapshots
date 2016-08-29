@@ -1,9 +1,6 @@
-package com.coderoad.snapshots;
-
-import javafx.beans.property.StringProperty;
+package com.coderoad.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +27,7 @@ public class BlinkData {
 
     /**
      * Case 1 , Incremental changes
-     * @return
+     * @return data
      */
     public static List<String> getCase1(String serialNumber) {
         //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
@@ -50,7 +47,7 @@ public class BlinkData {
 
     /**
      * Case 1 , Incremental changes
-     * @return
+     * @return data
      */
     public static List<String> getCase0(String serialNumber) {
         //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
@@ -69,7 +66,7 @@ public class BlinkData {
         StringBuilder sb =  new StringBuilder("");
         sb.append("sn,"+(int)((step+1)+Math.random()*1000));
         sb.append(System.lineSeparator());
-        Long caseTimestamp = 1471579200000L + step * 3600000;
+        Long caseTimestamp = Utilities.getDate() + step * Utilities.getStep();
         sb.append((new BlinkData(serialNumber,caseTimestamp,udf,value)).toString());
         data.put(serialNumber+"_"+step, sb.toString());
         return data;

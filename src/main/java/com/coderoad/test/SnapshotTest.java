@@ -1,32 +1,33 @@
 package com.coderoad.test;
 
-import com.coderoad.utils.CasesResults;
+import com.coderoad.utils.MongoDAOUtils;
+import com.coderoad.results.CasesResults;
 import com.coderoad.utils.CodeValue;
 import com.coderoad.utils.Utilities;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by RUTH on 16/08/21.
+ * First test cases
  */
 public class SnapshotTest {
 
-    String SERIAL_TEST = "SNAPSHOT08";
-    boolean CLEAN_THINGS = true;
-    String SERVICES_URL = "http://localhost:8080/riot-core-services";
-    Map<String, Long> thingIds = new HashMap<>();
+    String SERIAL_TEST = "SNAPSHOT10";
+    Map<String, Long> thingIds = Utilities.getThingIds();
+
+    @BeforeClass(alwaysRun = true)
+    public void initMongo() throws UnknownHostException {
+        MongoDAOUtils.getInstance().setupMongodb(Utilities.getMongoDB(),27017,"riot_main",2000000,50,"admin","control123!");
+    }
 
     @Test(description = "[t1,t3,t2][A,B,A]")
     public void testCase1PopDB() {
@@ -289,47 +290,7 @@ public class SnapshotTest {
 
     @AfterClass(alwaysRun=true)
     public void cleanUp (){
-        if (CLEAN_THINGS) {
-            System.out.println("Removing test things...");
-
-            String body = "[";
-            int i = 0;
-            int things = thingIds.size();
-            for (Map.Entry<String, Long> entry : thingIds.entrySet()) {
-                body += "{\"id\": " + entry.getValue() + "}";
-                i++;
-                if (i < things) {
-                    body += ',';
-                }
-            }
-            body += "]";
-
-            URL url = null;
-            try {
-                url = new URL(SERVICES_URL + "/api/thing/batchDelete");
-            } catch (MalformedURLException exception) {
-                exception.printStackTrace();
-            }
-            HttpURLConnection httpURLConnection = null;
-            DataOutputStream dataOutputStream = null;
-            try {
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestProperty("Content-Type", "application/json");
-                httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
-                httpURLConnection.setRequestMethod("DELETE");
-                httpURLConnection.setDoInput(true);
-                httpURLConnection.setDoOutput(true);
-                dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
-                dataOutputStream.writeChars(body);
-                System.out.println(httpURLConnection.getResponseCode() + ": " + httpURLConnection.getResponseMessage());
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            } finally {
-                if (httpURLConnection != null) {
-                    httpURLConnection.disconnect();
-                }
-            }
-        }
+        Utilities.cleanUp();
     }
 
 }

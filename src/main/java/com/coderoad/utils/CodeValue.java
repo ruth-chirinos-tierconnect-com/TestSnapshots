@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * Created by RUTH on 16/08/21.
+ *
  */
 public class CodeValue {
     private String serialNumber;
@@ -26,23 +27,23 @@ public class CodeValue {
     //    CodeValue(String name, String code, int step, Boolean changed) {
 //        this.name = name;
 //        this.code = code;
-//        this.time = new Date(Utilities.DATE + (step * 3600000));
+//        this.time = new Date(Utilities.getDate() + (step * Utilities.getStep()));
 //    }
 
-    CodeValue(String serialNumber, String name,String code, int step) {
+    public CodeValue(String serialNumber, String name,String code, int step) {
         this.serialNumber = serialNumber;
         this.name = name;
         this.code = code;
-        this.time = new Date(Utilities.DATE + (step * 3600000));
+        this.time = new Date(Utilities.getDate() + (step * Utilities.getStep()));
     }
 
-    CodeValue(String serialNumber, String name,String code, Long dwellTime, Boolean changed, Integer timeSnapshot,int step) {
+    public CodeValue(String serialNumber, String name,String code, Long dwellTime, Boolean changed, Integer timeSnapshot,int step) {
         this.step = step;
         this.serialNumber = serialNumber;
         this.name = name;
         this.code = code;
         if (timeSnapshot!=null){
-            this.time = new Date(Utilities.DATE + (timeSnapshot * 3600000));
+            this.time = new Date(Utilities.getDate() + (timeSnapshot * Utilities.getStep()));
         } else {
             this.time = null;
         }
@@ -58,7 +59,7 @@ public class CodeValue {
         this.changed = changed;
     }
 
-    CodeValue(String serialNumber, String name,String code, Date time, Long dwellTime, Boolean changed, Date timeSnapshot) {
+    public CodeValue(String serialNumber, String name,String code, Date time, Long dwellTime, Boolean changed) {
         this.serialNumber = serialNumber;
         this.name = name;
         this.code = code;
