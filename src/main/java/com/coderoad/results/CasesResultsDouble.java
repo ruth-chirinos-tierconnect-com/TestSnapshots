@@ -217,7 +217,7 @@ public class CasesResultsDouble {
         List<CodeValue> result = new ArrayList<>();
         result.add(new CodeValue(serialNumber,"zone", null, null, null, null, 1));
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.C.value, 1L, true, 2, 2));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, false, 3, 3));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 0L, true, 3, 3));
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, false, 3, 5));
         CasesResults.print(result);
         return result;
@@ -329,7 +329,7 @@ public class CasesResultsDouble {
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.A.value, 2L, true, 1, 1));
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.E.value, 1L, true, 3, 3));
         result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.F.value, 0L, true, 4, 4));
-        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.E.value, 1L, false, 4, 5));
+        result.add(new CodeValue(serialNumber,"zone", Utilities.zonesPopDB.F.value, 1L, false, 4, 5));
         CasesResults.print(result);
         return result;
     }

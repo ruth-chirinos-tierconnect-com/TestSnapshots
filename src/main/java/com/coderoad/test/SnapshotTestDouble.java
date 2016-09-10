@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class SnapshotTestDouble {
 
-    String SERIAL_TEST = "DOUBLE07";
+    String SERIAL_TEST = "DOUBLE29";
     Map<String, Long> thingIds = Utilities.getThingIds();
 
     @Test
