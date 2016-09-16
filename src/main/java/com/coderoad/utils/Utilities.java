@@ -40,17 +40,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class Utilities {
 
-    private static String MQTT_HOST     = "10.100.1.184";
+    private static String MQTT_HOST     = "localhost";
     private static int    MQTT_PORT     = 1883;
     private static int    QOS           = 2;
     private static Long   DATE          = 1471579200000L; //Fri Aug 19 2016 00:00:00 GMT-0400 (BOT)
     private static int    STEP          = 3600000; //One hour
     private static String ALE_CODE      = "ALEB";
     private static String THING_TYPE    = "default_rfid_thingtype";
-    private static String MONGO_DB      = "10.100.1.184";
+    private static String MONGO_DB      = "localhost";
     private static boolean CLEAN_THINGS = false;
     private static int    SLEEP         = 2;
-    private static String SERVICES_URL  = "http://10.100.1.184:8081/riot-core-services";
+    private static String SERVICES_URL  = "http://localhost:8080/riot-core-services";
     private static Map<String, Long> thingIds = new HashMap<>();
 
 
@@ -206,8 +206,7 @@ public class Utilities {
                                                String value2) {
         List<String> data = new ArrayList<>();
         Long caseTimestamp = DATE + step * STEP;
-        String sb = (new BlinkData(serialNumber, caseTimestamp, udf, value)).toString();
-        sb = serialNumber+","+caseTimestamp+","+udf+","+value+","+udf2+","+value2;
+        String sb = serialNumber+","+caseTimestamp+","+udf+","+value+","+udf2+","+value2;
         data.add(sb);
         return data;
     }
@@ -454,7 +453,8 @@ public class Utilities {
                 URL url = new URL(SERVICES_URL + "/api/thing/batchDelete");
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
-                httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+//                httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+                httpURLConnection.setRequestProperty("Api_key", "root");
                 httpURLConnection.setRequestMethod("DELETE");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
@@ -490,7 +490,7 @@ public class Utilities {
         return result;
     }
 
-    public static List<String> blinkFromFileEndPpoint (String fileName){
+    public static List<String> blinkFromFileEndPoint(String fileName){
         String filePath = new File("").getAbsolutePath();
         List<String> result = new ArrayList<>();
         try {
@@ -537,7 +537,8 @@ public class Utilities {
             URL url = new URL(SERVICES_URL + "/api/thing/"+String.valueOf(thingId));
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+//            httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+            httpURLConnection.setRequestProperty("Api_key", "root");
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
@@ -560,7 +561,8 @@ public class Utilities {
             URL url = new URL(SERVICES_URL + "/api/thing");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+//            httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
+            httpURLConnection.setRequestProperty("Api_key", "root");
             httpURLConnection.setRequestProperty("useDefaultValue", "true");
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setDoInput(true);
@@ -588,7 +590,8 @@ public class Utilities {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPatch request = new HttpPatch( SERVICES_URL + "/api/thing/"+String.valueOf(thingId) );
         request.addHeader("Content-Type", "application/json");
-        request.addHeader("Api_key", "7B4BCCDC");
+//        request.addHeader("Api_key", "7B4BCCDC");
+        request.addHeader("Api_key", "root");
         StringEntity entity = new StringEntity( body, ContentType.create( "application/json", "UTF-8" ) );
         request.setEntity( entity );
         try {
@@ -606,35 +609,6 @@ public class Utilities {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
-        }
-    }
-
-    public static void sendEndPoint(List<String> data) {
-        if ( (data != null) && (!data.isEmpty()) ) {
-            System.out.println("Sending to endpoint...");
-            boolean flag = true;
-            Long thingId = 0L;
-            for (String message : data) {
-
-                List<String> messList = Arrays.asList(message.split(","));
-                String body = "{" +
-                        "\"group\": \">MOJIX>SM\", \n" +
-                        "  \"thingTypeCode\": \"default_rfid_thingtype\", \n" +
-                        "  \"name\": \""+messList.get(0)+"\", \n" +
-                        "  \"serialNumber\": \""+messList.get(0)+"\", \n" +
-                        "  \"udfs\": { \n" +
-                        "   \""+messList.get(2)+"\": {" +
-                        "       \"value\": \""+messList.get(3)+"\"" +
-                        "      }\n" +
-                        "   }\n" +
-                        "}";
-                if (flag){
-                    thingId = createThing(body);
-                    flag = false;
-                } else {
-                    updateThing(thingId, body);
-                }
-            }
         }
     }
 

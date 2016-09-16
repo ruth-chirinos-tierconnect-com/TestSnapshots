@@ -22,7 +22,7 @@ public class servicesVsBridges {
     @Test
     public void BlinkFromFileEndPoint() {
         try {
-            List<String> blinks = Utilities.blinkFromFileEndPpoint(fileName + ".txt");
+            List<String> blinks = Utilities.blinkFromFileEndPoint(fileName + ".txt");
             List<CodeValueStatus> testData = CasesResults.caseFromFile(fileName);
             List<CodeValueStatus> testBlink = new ArrayList<>();
             int i = 0;

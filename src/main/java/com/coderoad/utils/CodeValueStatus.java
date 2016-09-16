@@ -99,10 +99,8 @@ public class CodeValueStatus {
             Calendar aC = Calendar.getInstance();
             aC.setTimeInMillis(dwellTimeGroup * 3600000);
             this.dwellTimeGroup = aC.getTimeInMillis();
-//            this.timeGroup = aC.getTime();
         } else {
             this.dwellTimeGroup = null;
-//            this.timeGroup = null;
         }
         if (timeType != null) {
             this.timeType = new Date(Utilities.getDate() + (timeType * Utilities.getStep()));
@@ -113,10 +111,8 @@ public class CodeValueStatus {
             Calendar aC = Calendar.getInstance();
             aC.setTimeInMillis(dwellTimeType * 3600000);
             this.dwellTimeType = aC.getTimeInMillis();
-//            this.timeType = aC.getTime();
         } else {
             this.dwellTimeType = null;
-//            this.timeType = null;
         }
         if (timeFacility != null) {
             this.timeFacility = new Date(Utilities.getDate() + (timeFacility * Utilities.getStep()));
@@ -127,10 +123,8 @@ public class CodeValueStatus {
             Calendar aC = Calendar.getInstance();
             aC.setTimeInMillis(dwellTimeFacility * 3600000);
             this.dwellTimeGroup = aC.getTimeInMillis();
-//            this.timeFacility = aC.getTime();
         } else {
             this.dwellTimeFacility = null;
-//            this.timeFacility = null;
         }
     }
 
