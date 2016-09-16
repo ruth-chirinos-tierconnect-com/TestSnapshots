@@ -532,7 +532,6 @@ public class Utilities {
 
     public static boolean thingExists(Long thingId){
         HttpURLConnection httpURLConnection = null;
-        DataOutputStream dataOutputStream;
         try {
             URL url = new URL(SERVICES_URL + "/api/thing/"+String.valueOf(thingId));
             httpURLConnection = (HttpURLConnection) url.openConnection();

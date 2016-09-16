@@ -24,11 +24,6 @@ public class CodeValue {
     public void setStep(int step) {
         this.step = step;
     }
-    //    CodeValue(String name, String code, int step, Boolean changed) {
-//        this.name = name;
-//        this.code = code;
-//        this.time = new Date(Utilities.getDate() + (step * Utilities.getStep()));
-//    }
 
     public CodeValue(String serialNumber, String name,String code, int step) {
         this.serialNumber = serialNumber;

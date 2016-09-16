@@ -17,8 +17,6 @@ public class MongoDAOUtils {
 
     private static MongoDAOUtils instance = new MongoDAOUtils();
 
-    //private static MongoDAOUtil readInstance = new MongoDAOUtil();
-
     public MongoClient mongoClient;
     public DB db;
     public DBCollection thingsCollection;
@@ -48,10 +46,8 @@ public class MongoDAOUtils {
         MongoClientOptions options = MongoClientOptions.builder()
                 .connectTimeout(connectTimeOut == null ? 3000 : connectTimeOut)
                 .connectionsPerHost(connectionsPerHost == null ? 200 : connectionsPerHost)  //sets the connection timeout to 3 seconds
-                //.autoConnectRetry( true )
                 .build();
 
-        //MongoCredential credential2 = MongoCredential.createPlainCredential(username, "admin", password.toCharArray());
         MongoCredential credential = MongoCredential.createCredential(username, "admin", password.toCharArray());
         MongoClient mongoClient =
                 new MongoClient(
@@ -73,6 +69,5 @@ public class MongoDAOUtils {
         instance.timeseriesCollection = db.getCollection("timeseries");
         instance.timeseriesControlCollection = db.getCollection("timeseriesControl");
         instance.sapCollection = db.getCollection("sap");
-
   }
 }
