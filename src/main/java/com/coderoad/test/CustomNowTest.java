@@ -2,7 +2,10 @@ package com.coderoad.test;
 
 import com.coderoad.results.CasesResults;
 import com.coderoad.utils.CodeValue;
+import com.coderoad.utils.EndPointHandler;
+import com.coderoad.utils.MQTTHandler;
 import com.coderoad.utils.Utilities;
+import com.coderoad.utils.Comparator;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -32,7 +35,7 @@ public class CustomNowTest {
         try {
             String serialNumber = "CASE1"+SERIAL_TEST;
             List<String> data = CasesResults.getRandomCase(serialNumber, 1, BLINKS0, true);
-            Utilities.sendTickles(data);
+            MQTTHandler.sendTickles(data);
 
             List<CodeValue> testDataNow = CasesResults.casesStepDBThings(serialNumber);
 
@@ -40,12 +43,12 @@ public class CustomNowTest {
 
             data.clear();
             data = CasesResults.getRandomCase(serialNumber, (BLINKS0+WAIT), (BLINKS0+BLINKS1+WAIT), false);
-            Utilities.sendTickles(data);
+            MQTTHandler.sendTickles(data);
 
             List<CodeValue> testDataCustom = CasesResults.casesStepDBCustom(serialNumber, 0, (BLINKS0+1));
             Assert.assertEquals(testDataNow.size()== testDataCustom.size(), true
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo "+ testDataCustom.size()+", they must be "+testDataNow.size());
-            Assert.assertEquals(Utilities.compareData(testDataNow,testDataCustom), true, "Data is inconsistent in step2." );
+            Assert.assertEquals(Comparator.compareData(testDataNow,testDataCustom), true, "Data is inconsistent in step2." );
         } catch (Exception e ) {
             e.printStackTrace();
         }
@@ -54,6 +57,6 @@ public class CustomNowTest {
 
     @AfterClass(alwaysRun=true)
     public void cleanUp (){
-        Utilities.cleanUp();
+        EndPointHandler.cleanUp();
     }
 }

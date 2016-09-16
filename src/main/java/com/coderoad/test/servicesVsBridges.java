@@ -2,6 +2,9 @@ package com.coderoad.test;
 
 import com.coderoad.results.CasesResults;
 import com.coderoad.utils.CodeValueStatus;
+import com.coderoad.utils.Comparator;
+import com.coderoad.utils.EndPointHandler;
+import com.coderoad.utils.MQTTHandler;
 import com.coderoad.utils.Utilities;
 
 import org.testng.Assert;
@@ -29,7 +32,7 @@ public class servicesVsBridges {
             Long thingId = 0L;
             for (String blink : blinks) {
 
-                thingId = Utilities.sendEndPoint(blink, thingId);
+                thingId = EndPointHandler.sendEndPoint(blink, thingId);
 
                 testBlink.add(testData.get(i));
                 List<CodeValueStatus> resultDB = CasesResults.casesStepDB(testData.get(i).getSerialNumber(),
@@ -39,7 +42,7 @@ public class servicesVsBridges {
                         , "Error number of snapshots" + "Quantity of Snapshots in Mongo " + resultDB.size() + ", they" +
                                 " must be " + testBlink.size());
 
-                Assert.assertEquals(Utilities.compareDataStatus(testBlink, resultDB), true, "Data is inconsistent in " +
+                Assert.assertEquals(Comparator.compareDataStatus(testBlink, resultDB), true, "Data is inconsistent in " +
                         "step1.");
                 i++;
                 testBlink.clear();
@@ -56,7 +59,7 @@ public class servicesVsBridges {
             List<String> blinks = Utilities.blinkFromFileBridge(fileName + ".txt");
             List<CodeValueStatus> testData = CasesResults.caseFromFile(fileName + "All");
 
-            Utilities.sendTickles(blinks);
+            MQTTHandler.sendTickles(blinks);
 
             List<CodeValueStatus> resultDB = CasesResults.casesStepDB(testData.get(0).getSerialNumber(),
                     testData.get(0).getName(), 1, 100000);
@@ -65,7 +68,7 @@ public class servicesVsBridges {
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo " + resultDB.size() + ", they " +
                             "must be " + testData.size());
 
-            Assert.assertEquals(Utilities.compareDataStatus(testData, resultDB), true, "Data is inconsistent in " +
+            Assert.assertEquals(Comparator.compareDataStatus(testData, resultDB), true, "Data is inconsistent in " +
                     "step1.");
 
         } catch (Exception e) {
@@ -84,7 +87,7 @@ public class servicesVsBridges {
                     , "Error number of snapshots" + "Quantity of Snapshots in Mongo " + resultDB.size() + ", they " +
                             "must be " + testData.size());
 
-            Assert.assertEquals(Utilities.compareDataStatus(testData, resultDB), true, "Data is inconsistent in " +
+            Assert.assertEquals(Comparator.compareDataStatus(testData, resultDB), true, "Data is inconsistent in " +
                     "step1.");
 
         } catch (Exception e) {
