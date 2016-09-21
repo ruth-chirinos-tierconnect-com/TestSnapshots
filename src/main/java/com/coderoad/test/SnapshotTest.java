@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class SnapshotTest {
 
-    String SERIAL_TEST = "SNAPSHOT05";
+    String SERIAL_TEST = "SNAPSHOT01";
     Map<String, Long> thingIds = Utilities.getThingIds();
 
     @Test(description = "[t1,t3,t2][A,B,A]")

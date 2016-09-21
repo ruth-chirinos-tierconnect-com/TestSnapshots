@@ -25,6 +25,7 @@ import java.util.Map;
 public class EndPointHandler {
 
     private static String ENDPOINT_URL = "http://localhost:8080/riot-core-services";
+    private static String API_KEY = "7B4BCCDC";
 
     public static boolean thingExists(Long thingId){
         HttpURLConnection httpURLConnection = null;
@@ -32,8 +33,7 @@ public class EndPointHandler {
             URL url = new URL(ENDPOINT_URL + "/api/thing/"+String.valueOf(thingId));
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-//            httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
-            httpURLConnection.setRequestProperty("Api_key", "root");
+            httpURLConnection.setRequestProperty("Api_key", API_KEY);
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
@@ -56,8 +56,7 @@ public class EndPointHandler {
             URL url = new URL(ENDPOINT_URL + "/api/thing");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-//            httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
-            httpURLConnection.setRequestProperty("Api_key", "root");
+            httpURLConnection.setRequestProperty("Api_key", API_KEY);
             httpURLConnection.setRequestProperty("useDefaultValue", "true");
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setDoInput(true);
@@ -85,8 +84,7 @@ public class EndPointHandler {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPatch request = new HttpPatch( ENDPOINT_URL + "/api/thing/"+String.valueOf(thingId) );
         request.addHeader("Content-Type", "application/json");
-//        request.addHeader("Api_key", "7B4BCCDC");
-        request.addHeader("Api_key", "root");
+        request.addHeader("Api_key", API_KEY);
         StringEntity entity = new StringEntity( body, ContentType.create( "application/json", "UTF-8" ) );
         request.setEntity( entity );
         try {
@@ -161,8 +159,7 @@ public class EndPointHandler {
                 URL url = new URL(ENDPOINT_URL + "/api/thing/batchDelete");
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
-//                httpURLConnection.setRequestProperty("Api_key", "7B4BCCDC");
-                httpURLConnection.setRequestProperty("Api_key", "root");
+                httpURLConnection.setRequestProperty("Api_key", API_KEY);
                 httpURLConnection.setRequestMethod("DELETE");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
